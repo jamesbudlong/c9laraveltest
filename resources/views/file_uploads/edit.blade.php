@@ -45,12 +45,12 @@
                     {!! Form::text('description', null, array('placeholder' => 'Description','class' => 'form-control', 'required')) !!}
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12">
+            {{-- <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>File Base64 Encoded:</strong><br/>
                     <textarea style="resize:none;" class="col-md-12" rows="7" disabled>{{$file_upload->encoded_file}}</textarea>
                 </div>
-            </div>
+            </div> --}}
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Filename:</strong><br/>

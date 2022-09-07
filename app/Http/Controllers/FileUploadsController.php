@@ -77,8 +77,11 @@ class FileUploadsController extends Controller
             $request->file('uploaded_file')->move(public_path('storage/app/public/images'), $file_name);
             $data = file_get_contents(public_path('storage/app/public/images/') . $file_name);
 
+            //Get the mime_content_type to determine what files we encoding
+            $mime_content_type = mime_content_type(public_path('storage/app/public/images/') . $file_name);
+
             //Encode file to base64
-            $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
+            $base64 = 'data:' . $mime_content_type . ';base64,' . base64_encode($data);
 
             //Save to database
             $input['encoded_file'] = $base64;
@@ -167,8 +170,11 @@ class FileUploadsController extends Controller
                 $request->file('uploaded_file')->move(public_path('storage/app/public/images'), $file_name);
                 $data = file_get_contents(public_path('storage/app/public/images/') . $file_name);
 
+                //Get the mime_content_type to determine what files we encoding
+                $mime_content_type = mime_content_type(public_path('storage/app/public/images/') . $file_name);
+
                 //Encode file to base64
-                $base64 = 'data:image/' . $file_extension . ';base64,' . base64_encode($data);
+                $base64 = 'data:' . $mime_content_type . ';base64,' . base64_encode($data);
 
                 $input['encoded_file'] = $base64;
                 $input['file_name'] = $file_name;

@@ -35,7 +35,7 @@
                 <th>Title</th>
                 <th>Description</th>
                 <th>Filename</th>
-                <th class="col-3">Encoded File</th>
+                {{-- <th class="col-3">Encoded File</th> --}}
                 <th>Action</th>
                 </tr>
 
@@ -44,11 +44,11 @@
                 <td>{{ $file_upload->title }}</td>
                 <td>{{ $file_upload->description }}</td>
                 <td>{{ $file_upload->file_name }}</td>
-                <td>
+                {{-- <td>
                         <div style="white-space: nowrap; width: auto; overflow: hidden; text-overflow: ellipsis;">
                             {{ $file_upload->encoded_file}}
                         </div>
-                </td>
+                </td> --}}
                 <td>
                     <form action="{{ route('file_uploads.destroy',$file_upload->id) }}" method="POST" >
                         {{-- <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a> --}}
