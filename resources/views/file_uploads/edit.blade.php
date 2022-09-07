@@ -3,15 +3,21 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Users Management - Edit</h3>
+        <h3 class="card-title">File Uploads - Edit</h3>
         <div class="card-tools">
             <span class="badge">
-                <a class="btn btn-dark btn-sm" href="{{ route('users.index') }}"> Back </a>
+                <a class="btn btn-dark btn-sm" href="{{ route('file_uploads.index') }}"> Back </a>
             </span>
         </div>
     </div>
 
     <div class="card-body">
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
+
         @if (count($errors) > 0)
             <div class="alert alert-danger">
                 <strong>Whoops!</strong>Something went wrong.<br><br>
@@ -23,36 +29,38 @@
             </div>
         @endif
 
-        {!! Form::model($user, ['method' => 'PATCH','route' => ['users.update', $user->id]]) !!}
+        {{-- body here --}}
+        {!! Form::model($file_upload, ['method' => 'PATCH','route' => ['file_uploads.update', $file_upload->id], 'files'=>'true']) !!}
+        @csrf
         <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Name:</strong>
-                    {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control', 'required')) !!}
+                    <strong>Title:</strong>
+                    {!! Form::text('title', null, array('placeholder' => 'Title','class' => 'form-control', 'required')) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Email:</strong>
-                    {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control', 'required')) !!}
+                    <strong>Description:</strong>
+                    {!! Form::text('description', null, array('placeholder' => 'Description','class' => 'form-control', 'required')) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Password:</strong>
-                    {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
+                    <strong>File Base64 Encoded:</strong><br/>
+                    <textarea style="resize:none;" class="col-md-12" rows="7" disabled>{{$file_upload->encoded_file}}</textarea>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Confirm Password:</strong>
-                    {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
+                    <strong>Filename:</strong><br/>
+                    <h5> {{$file_upload->file_name}} </h5>
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
-                    <strong>Role:</strong>
-                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control', 'required')) !!}
+                    <strong>Replace File:</strong><br/>
+                    {!! Form::file('uploaded_file', null, array('placeholder' => 'Upload files here','class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
@@ -60,6 +68,7 @@
             </div>
         </div>
         {!! Form::close() !!}
+
     </div>
 </div>
 

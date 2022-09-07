@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\UserRolesController;
+use App\Http\Controllers\FileUploadsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -49,13 +50,13 @@ Route::group(['middleware' => ['auth']], function() {
         Route::delete('/{role}/delete', [UserRolesController::class, 'destroy'])->name('roles.destroy');
     });
 
-    // Route::group(['prefix' => 'file_uploads'], function() {
-    //     Route::get('/', 'FileUploadsController@index')->name('file_uploads.index');
-    //     Route::get('/create', 'FileUploadsController@create')->name('file_uploads.create');
-    //     Route::post('/create', 'FileUploadsController@store')->name('file_uploads.store');
-    //     Route::get('/{file_upload}/show', 'FileUploadsController@show')->name('file_uploads.show');
-    //     Route::get('/{file_upload}/edit', 'FileUploadsController@edit')->name('file_uploads.edit');
-    //     Route::patch('/{file_upload}/update', 'FileUploadsController@update')->name('file_uploads.update');
-    //     Route::delete('/{file_upload}/delete', 'FileUploadsController@destroy')->name('file_uploads.destroy');
-    // });
+    Route::group(['prefix' => 'file_uploads'], function() {
+        Route::get('/', [FileUploadsController::class, 'index'])->name('file_uploads.index');
+        Route::get('/create', [FileUploadsController::class, 'create'])->name('file_uploads.create');
+        Route::post('/create', [FileUploadsController::class, 'store'])->name('file_uploads.store');
+        // Route::get('/{user}/show', [FileUploadsController::class, 'show'])->name('file_uploads.show');
+        Route::get('/{file_upload}/edit', [FileUploadsController::class, 'edit'])->name('file_uploads.edit');
+        Route::patch('/{file_upload}/update', [FileUploadsController::class, 'update'])->name('file_uploads.update');
+        Route::delete('/{file_upload}/delete', [FileUploadsController::class, 'destroy'])->name('file_uploads.destroy');
+    });
 });

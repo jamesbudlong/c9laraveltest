@@ -26,22 +26,22 @@
     </li>
 @endcan
 
-@if(in_array("member", Auth::user()->roles->toArray()))
-    {{-- <li class="nav-item">
-        <a href="{{ route('roles.index') }}" class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-users"></i>
-            <p>Roles</p>
-        </a>
-    </li> --}}
-@endif
-
-{{-- @can('view-all-file-upload')
+@if(Auth::user()->hasRole('Member'))
     <li class="nav-item">
-        <a href="{{ route('file_uploads.index') }}" class="nav-link {{ (request()->segment(1) == 'roles') ? 'active' : '' }}">
-            <i class="nav-icon fas fa-users"></i>
-            <p>Roles</p>
+        <a href="{{ route('file_uploads.create') }}" class="nav-link {{ (request()->segment(1) == 'file_uploads') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file"></i>
+            <p>File Upload</p>
         </a>
     </li>
-@endcan --}}
+@endif
+
+@can('view-all-file-upload')
+    <li class="nav-item">
+        <a href="{{ route('file_uploads.index') }}" class="nav-link {{ (request()->segment(1) == 'file_uploads') ? 'active' : '' }}">
+            <i class="nav-icon fas fa-file"></i>
+            <p>File Uploads</p>
+        </a>
+    </li>
+@endcan
 
 

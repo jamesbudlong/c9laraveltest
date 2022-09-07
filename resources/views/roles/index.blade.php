@@ -29,7 +29,7 @@
             </div>
         @endif
 
-        <table class="table table-bordered">
+        <table class="table table-bordered table-striped table-hover">
             <tr>
               <th>Name</th>
               <th width="280px">Action</th>

@@ -17,7 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description');
-            $table->string('encoded_file');
+            $table->string('file_name');
+            $table->string('file_extension');
+            $table->longText('encoded_file');
+            $table->softDeletes();
             $table->timestamps();
         });
     }
