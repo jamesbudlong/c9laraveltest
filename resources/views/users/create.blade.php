@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Users Management</h3>
+        <h3 class="card-title">Users Management - Create</h3>
         <div class="card-tools">
             <span class="badge">
                 <a class="btn btn-dark btn-sm" href="{{ route('users.index') }}"> Back </a>

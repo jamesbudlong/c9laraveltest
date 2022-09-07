@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\RolesController;
+use App\Http\Controllers\UserRolesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +19,6 @@ Route::get('/', function () {
     return view('auth.login');
 })->middleware('guest');
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
@@ -28,17 +26,27 @@ Auth::routes([
   ]);
 
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RolesController::class);
-    Route::resource('permissions', PermissionsController::class);
+    Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+    // Route::resource('permissions', PermissionsController::class);
 
     Route::group(['prefix' => 'users'], function() {
-        Route::get('/', [App\Http\Controllers\UsersController::class, 'index'])->name('users.index');
-        Route::get('/create', [App\Http\Controllers\UsersController::class, 'create'])->name('users.create');
-        Route::post('/create', [App\Http\Controllers\UsersController::class, 'store'])->name('users.store');
-        // Route::get('/{user}/show', [App\Http\Controllers\UsersController::class, 'show'])->name('users.show');
-        Route::get('/{user}/edit', [App\Http\Controllers\UsersController::class, 'edit'])->name('users.edit');
-        Route::patch('/{user}/update', [App\Http\Controllers\UsersController::class, 'update'])->name('users.update');
-        Route::delete('/{user}/delete', [App\Http\Controllers\UsersController::class, 'destroy'])->name('users.destroy');
+        Route::get('/', [UsersController::class, 'index'])->name('users.index');
+        Route::get('/create', [UsersController::class, 'create'])->name('users.create');
+        Route::post('/create', [UsersController::class, 'store'])->name('users.store');
+        // Route::get('/{user}/show', [UsersController::class, 'show'])->name('users.show');
+        Route::get('/{user}/edit', [UsersController::class, 'edit'])->name('users.edit');
+        Route::patch('/{user}/update', [UsersController::class, 'update'])->name('users.update');
+        Route::delete('/{user}/delete', [UsersController::class, 'destroy'])->name('users.destroy');
+    });
+
+    Route::group(['prefix' => 'roles'], function() {
+        Route::get('/', [UserRolesController::class, 'index'])->name('roles.index');
+        Route::get('/create', [UserRolesController::class, 'create'])->name('roles.create');
+        Route::post('/create', [UserRolesController::class, 'store'])->name('roles.store');
+        // Route::get('/{user}/show', [UserRolesController::class, 'show'])->name('roles.show');
+        Route::get('/{role}/edit', [UserRolesController::class, 'edit'])->name('roles.edit');
+        Route::patch('/{role}/update', [UserRolesController::class, 'update'])->name('roles.update');
+        Route::delete('/{role}/delete', [UserRolesController::class, 'destroy'])->name('roles.destroy');
     });
 
     // Route::group(['prefix' => 'file_uploads'], function() {

@@ -3,7 +3,7 @@
 
 <div class="card">
     <div class="card-header">
-        <h3 class="card-title">Users Management</h3>
+        <h3 class="card-title">Users Management - Edit</h3>
         <div class="card-tools">
             <span class="badge">
                 <a class="btn btn-dark btn-sm" href="{{ route('users.index') }}"> Back </a>
@@ -52,7 +52,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Role:</strong>
-                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control','multiple')) !!}
+                    {!! Form::select('roles[]', $roles,$userRole, array('class' => 'form-control')) !!}
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

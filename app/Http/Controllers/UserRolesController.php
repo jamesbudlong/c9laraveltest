@@ -9,7 +9,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
 
-class RoleController extends Controller
+class UserRolesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -23,8 +23,9 @@ class RoleController extends Controller
             abort(403, 'User cannot perform this action.');
         }
 
-        $roles = Role::orderBy('id','DESC')->paginate(5);
-        return view('roles.index',compact('roles'))
+        $data = Role::orderBy('id','DESC')->paginate(5);
+
+        return view('roles.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
 
