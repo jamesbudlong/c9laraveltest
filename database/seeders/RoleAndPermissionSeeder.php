@@ -4,6 +4,11 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use App\Models\User;
+use DB;
+use Carbon\Carbon;
 
 class RoleAndPermissionSeeder extends Seeder
 {
@@ -14,8 +19,8 @@ class RoleAndPermissionSeeder extends Seeder
      */
     public function run()
     {
-        //Permissions - Dashboard
-        Permission::create(['name' => 'view-dashboard']);
+        //Permissions - Homepage
+        Permission::create(['name' => 'view-homepage']);
 
         //Permissions - User
         Permission::create(['name' => 'view-all-user']);
@@ -46,7 +51,7 @@ class RoleAndPermissionSeeder extends Seeder
         $member = Role::create(['name' => 'Member']);
 
         $admin->givePermissionTo([
-            'view-dashboard',
+            'view-homepage',
             'view-all-user',
             'create-user',
             'update-user',
@@ -66,8 +71,28 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
 
         $member->givePermissionTo([
-            'view-dashboard',
+            'view-homepage',
             'create-file-upload',
         ]);
+
+        DB::table('users')->insert([
+            'name' => 'James Admin',
+            'email' => 'admin@gmail.com',
+            'password' => bcrypt('admin'),
+            'created_at' => Carbon::now()->toDateTimeString()
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'James Member',
+            'email' => 'member@gmail.com',
+            'password' => bcrypt('member'),
+            'created_at' => Carbon::now()->toDateTimeString()
+        ]);
+
+        $user = User::where('email', 'admin@gmail.com')->first();
+        $user->assignRole('Admin');
+
+        $user = User::where('email', 'member@gmail.com')->first();
+        $user->assignRole('Member');
     }
 }

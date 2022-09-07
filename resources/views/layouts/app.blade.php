@@ -71,7 +71,10 @@
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
-        @yield('content')
+        <br /> <br />
+        <div class="content px-4">
+            @yield('content')
+        </div>
     </div>
 
     <!-- Main Footer -->

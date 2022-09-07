@@ -18,9 +18,9 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        if(!auth()->user()->hasPermissionTo('view all users'))
+        if(!auth()->user()->hasPermissionTo('view-all-user'))
         {
-            return back()->with('error','This account do not have permission to view all users.');
+            abort(403, 'User cannot perform this action.');
         }
 
         $data = User::orderBy('id','DESC')->paginate(5);
@@ -35,6 +35,11 @@ class UsersController extends Controller
      */
     public function create()
     {
+        if(!auth()->user()->hasPermissionTo('create-user'))
+        {
+            abort(403, 'User cannot perform this action.');
+        }
+
         $roles = Role::pluck('name','name')->all();
         return view('users.create',compact('roles'));
     }
@@ -47,6 +52,11 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        if(!auth()->user()->hasPermissionTo('create-user'))
+        {
+            abort(403, 'User cannot perform this action.');
+        }
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
@@ -72,8 +82,8 @@ class UsersController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
-        return view('users.show',compact('user'));
+        // $user = User::find($id);
+        // return view('users.show',compact('user'));
     }
 
     /**
@@ -84,6 +94,11 @@ class UsersController extends Controller
      */
     public function edit($id)
     {
+        if(!auth()->user()->hasPermissionTo('update-user'))
+        {
+            abort(403, 'User cannot perform this action.');
+        }
+
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
         $userRole = $user->roles->pluck('name','name')->all();
@@ -100,6 +115,11 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if(!auth()->user()->hasPermissionTo('update-user'))
+        {
+            abort(403, 'User cannot perform this action.');
+        }
+
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email,'.$id,
@@ -132,6 +152,11 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
+        if(!auth()->user()->hasPermissionTo('delete-user'))
+        {
+            abort(403, 'User cannot perform this action.');
+        }
+
         User::find($id)->delete();
         return redirect()->route('users.index')
                         ->with('success','User deleted successfully');
